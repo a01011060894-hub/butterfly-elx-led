@@ -1053,7 +1053,13 @@
         window.COMPANY_INFO = JSON.parse(localStorage.getItem('bf_company_info_v3')) || DEFAULT_COMPANY_INFO;
 
         // Initialize State with LocalStorage fallback
-        window.PRODUCT_LIBRARY = JSON.parse(localStorage.getItem('bf_led_library_v3')) || DEFAULT_PRODUCT_LIBRARY;
+        const CATALOG_VERSION='2026-07-07';
+const storedCatalogVersion=localStorage.getItem('bf_led_library_version');
+if(storedCatalogVersion!==CATALOG_VERSION){
+  localStorage.setItem('bf_led_library_v3',JSON.stringify(DEFAULT_PRODUCT_LIBRARY));
+  localStorage.setItem('bf_led_library_version',CATALOG_VERSION);
+}
+window.PRODUCT_LIBRARY = JSON.parse(localStorage.getItem('bf_led_library_v3')) || DEFAULT_PRODUCT_LIBRARY;
         window.SETTINGS = JSON.parse(localStorage.getItem('bf_led_settings_v3')) || DEFAULT_SETTINGS;
         window.CLIENTS = JSON.parse(localStorage.getItem('bf_led_clients_v3')) || DEFAULT_CLIENTS;
         window.QUOTES = JSON.parse(localStorage.getItem('bf_led_quotes_v3')) || [];
