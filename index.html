@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" class="transition-all duration-300">
 <head>
@@ -19,12 +18,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <!-- SheetJS (XLSX) Library for Import & Export Excel -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    
-    <!-- Firebase SDK (Compat API) -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-
     <script>
         tailwind.config = {
             theme: {
@@ -122,16 +115,9 @@
                 </button>
             </nav>
 
-            <div class="flex items-center gap-3">
-                <div class="hidden sm:flex items-center gap-2 text-xs bg-slate-800/80 px-4 py-2 rounded-full border border-slate-700/50">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span class="font-bold text-slate-200">الكتالوج نشط ✔</span>
-                </div>
-                <!-- Cloud Connection Badge -->
-                <div class="flex items-center gap-2 text-xs bg-slate-800/80 px-4 py-2 rounded-full border border-slate-700/50" id="cloud-status-indicator">
-                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" id="cloud-status-dot"></span>
-                    <span class="font-bold text-slate-200 text-[10px]" id="cloud-status-text">جاري الاتصال السحابي...</span>
-                </div>
+            <div class="hidden sm:flex items-center gap-2 text-xs bg-slate-800/80 px-4 py-2 rounded-full border border-slate-700/50">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="font-bold text-slate-200">الكتالوج نشط ✔</span>
             </div>
         </div>
     </header>
@@ -796,10 +782,49 @@
                         </button>
                         <input type="file" id="companyLogoFileInput" accept="image/*" class="hidden" onchange="window.handleLogoUpload(event)">
                         
-                        <!-- Logo visual preview box -->
+                        <!-- Logo visual preview box from image_f94b6b.png -->
                         <div id="settingsLogoPreviewBox" class="w-24 h-16 border-2 border-dashed border-slate-200 rounded-2xl flex items-center justify-center bg-slate-50/50 overflow-hidden relative group">
                             <span class="text-slate-400 font-bold text-[10px]" id="settingsLogoPlaceholder">لا يوجد</span>
                             <img id="settingsLogoImg" src="" alt="Company Logo" class="hidden max-h-full max-w-full object-contain p-1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMPLETE SYSTEM BACKUP (EXPORT & IMPORT JSON) -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                <div class="border-b border-slate-100 pb-3 mb-4">
+                    <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                        <span>💾</span><span>النسخ الاحتياطي واستعادة البيانات بالكامل</span>
+                    </h2>
+                    <p class="text-[11px] text-slate-500 mt-0.5">تجنب مشاكل وعقبات الحفظ السحابي تماماً! يمكنك حفظ نسخة احتياطية محلية متكاملة لجميع بياناتك (العملاء، المنتجات، الإعدادات، أرشيف عروض الأسعار، شعار ومعلومات الشركة) بصيغة ملف JSON واستعادتها في أي وقت بنقرة واحدة.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="p-4 bg-violet-50/50 border border-violet-100 rounded-xl flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-bold text-violet-950 flex items-center gap-1.5 mb-1">
+                                <span>📤</span><span>تصدير نسخة احتياطية شاملة</span>
+                            </h4>
+                            <p class="text-[10px] text-slate-500 leading-relaxed mb-3">سيقوم النظام بتجميع كافة السجلات، إعدادات التسعير، معلومات الفواتير والملفات الضريبية وتنزيلها كملف واحد آمن على جهازك.</p>
+                        </div>
+                        <button onclick="window.exportSystemBackup()" class="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-2.5 px-4 rounded-xl transition flex justify-center items-center gap-2 shadow-sm text-xs mt-2">
+                            <span>⬇️</span><span>تحميل ملف النسخة الاحتياطية (JSON)</span>
+                        </button>
+                    </div>
+
+                    <div class="p-4 bg-amber-50/40 border border-amber-100 rounded-xl flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-bold text-amber-950 flex items-center gap-1.5 mb-1">
+                                <span>📥</span><span>استيراد واسترجاع نسخة احتياطية</span>
+                            </h4>
+                            <p class="text-[10px] text-slate-500 leading-relaxed mb-3">ارفع ملف النسخة الاحتياطية (.json) المستخرج سابقاً لاستبدال البيانات المحلية وتحديث النظام بالكامل فورياً دون فقدان أي سجل.</p>
+                        </div>
+                        <div>
+                            <button onclick="document.getElementById('systemBackupFileInput').click()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 px-4 rounded-xl transition flex justify-center items-center gap-2 shadow-sm text-xs">
+                                <span>⬆️</span><span>اختر ملف واسترجع البيانات الآن</span>
+                            </button>
+                            <input type="file" id="systemBackupFileInput" accept=".json" class="hidden" onchange="window.importSystemBackup(event)">
                         </div>
                     </div>
                 </div>
@@ -1064,16 +1089,9 @@
             phone: '+966 56 839 7048',
             logo: ''
         };
-        
-        // Dynamic state initialization
         window.COMPANY_INFO = JSON.parse(localStorage.getItem('bf_company_info_v3')) || DEFAULT_COMPANY_INFO;
 
-        const CATALOG_VERSION = '2026-07-07';
-        const storedCatalogVersion = localStorage.getItem('bf_led_library_version');
-        if (storedCatalogVersion !== CATALOG_VERSION) {
-            localStorage.setItem('bf_led_library_v3', JSON.stringify(DEFAULT_PRODUCT_LIBRARY));
-            localStorage.setItem('bf_led_library_version', CATALOG_VERSION);
-        }
+        // Initialize State with LocalStorage fallback
         window.PRODUCT_LIBRARY = JSON.parse(localStorage.getItem('bf_led_library_v3')) || DEFAULT_PRODUCT_LIBRARY;
         window.SETTINGS = JSON.parse(localStorage.getItem('bf_led_settings_v3')) || DEFAULT_SETTINGS;
         window.CLIENTS = JSON.parse(localStorage.getItem('bf_led_clients_v3')) || DEFAULT_CLIENTS;
@@ -1085,225 +1103,6 @@
         window.activeProductId = window.PRODUCT_LIBRARY.indoor[0]?.id || '';
         window.activeCart = []; // Current active quotation list items
         window.aiGeneratedProposalPitch = ''; // AI Pitch text state
-
-        // ==================== FIREBASE CONFIGURATION & AUTOSYNC IMPLEMENTATION ====================
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'butterfly-elx-led';
-        let firebaseConfig;
-        
-        if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-            firebaseConfig = JSON.parse(__firebase_config);
-        } else {
-            // Fallback parameters from user console screenshots
-            firebaseConfig = {
-                apiKey: "", // Filled at runtime
-                authDomain: "butterfly-elx-led.firebaseapp.com",
-                projectId: "butterfly-elx-led",
-                storageBucket: "butterfly-elx-led.appspot.com",
-                messagingSenderId: "1071477156942",
-                appId: "1:1071477156942:web:715d7426b38c281e649035"
-            };
-        }
-
-        // Initialize Firebase Compat
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        // UI Cloud sync state feedback helper
-        window.updateCloudStatus = function(status, text) {
-            const dot = document.getElementById('cloud-status-dot');
-            const label = document.getElementById('cloud-status-text');
-            if (!dot || !label) return;
-            
-            label.innerText = text;
-            dot.className = "w-2.5 h-2.5 rounded-full";
-            
-            if (status === 'connecting') {
-                dot.classList.add('bg-amber-500', 'animate-pulse');
-            } else if (status === 'synced') {
-                dot.classList.add('bg-emerald-500');
-            } else if (status === 'saving') {
-                dot.classList.add('bg-sky-500', 'animate-pulse');
-            } else if (status === 'error') {
-                dot.classList.add('bg-rose-500');
-            }
-        };
-
-        // Firebase auth initiator (Strict Rule 3)
-        async function initFirebaseConnection() {
-            try {
-                window.updateCloudStatus('connecting', 'جاري الربط السحابي...');
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await auth.signInWithCustomToken(__initial_auth_token);
-                } else {
-                    await auth.signInAnonymously();
-                }
-            } catch (e) {
-                console.error("Firebase auth connection error:", e);
-                window.updateCloudStatus('error', 'وضع أوفلاين (حفظ محلي)');
-            }
-        }
-
-        // Generic Cloud Save helper adhering strictly to Rule 1 (Public Document Path)
-        window.cloudSave = async function(key, data, silent = false) {
-            if (!silent) window.updateCloudStatus('saving', 'جاري المزامنة سحابياً...');
-            try {
-                // Path Rule 1: /artifacts/{appId}/public/data/{collectionName}/{documentId}
-                const docRef = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('erp_store').doc(key);
-                await docRef.set({
-                    content: data,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                if (!silent) {
-                    window.updateCloudStatus('synced', 'متصل بالسحابة ✔️');
-                    window.showToast("تم مزامنة التغييرات سحابياً بنجاح", "success");
-                }
-            } catch (e) {
-                console.error("Firebase Cloud Save Error:", e);
-                if (!silent) {
-                    window.updateCloudStatus('error', 'وضع أوفلاين (حفظ محلي)');
-                    window.showToast("فشلت المزامنة السحابية، تم الحفظ محلياً", "warning");
-                }
-            }
-        };
-
-        // Apply loaded Cloud data to runtime variables smoothly (Stale-While-Revalidate model)
-        window.applyCloudData = function(key, data) {
-            if (!data) return;
-            if (key === 'company_info') {
-                window.COMPANY_INFO = data;
-                localStorage.setItem('bf_company_info_v3', JSON.stringify(data));
-                if (window.activeTab === 'settings') window.renderSettingsTab();
-                window.recalcQuotationFinancials();
-            } else if (key === 'product_library') {
-                window.PRODUCT_LIBRARY = data;
-                localStorage.setItem('bf_led_library_v3', JSON.stringify(data));
-                if (window.activeTab === 'products') window.renderProductManagerList();
-                window.renderHomeProducts();
-            } else if (key === 'settings') {
-                window.SETTINGS = data;
-                localStorage.setItem('bf_led_settings_v3', JSON.stringify(data));
-                if (window.activeTab === 'settings') window.renderSettingsTab();
-                window.recalcQuotationFinancials();
-            } else if (key === 'clients') {
-                window.CLIENTS = data;
-                localStorage.setItem('bf_led_clients_v3', JSON.stringify(data));
-                if (window.activeTab === 'clients') window.renderClientsTab();
-                window.populateClientsDropdowns();
-            } else if (key === 'quotes') {
-                window.QUOTES = data;
-                localStorage.setItem('bf_led_quotes_v3', JSON.stringify(data));
-                if (window.activeTab === 'quotes') window.renderQuotationsTab();
-            } else if (key === 'active_session') {
-                // Hydrate current screen variables instantly
-                window.activeCart = data.activeCart || [];
-                
-                if (document.getElementById('activeProjectName')) document.getElementById('activeProjectName').value = data.projectName || '';
-                if (document.getElementById('activeProposalNum')) document.getElementById('activeProposalNum').value = data.proposalNum || '';
-                if (document.getElementById('activeCustomerCode')) document.getElementById('activeCustomerCode').value = data.customerCode || '';
-                if (document.getElementById('activeValidityDate')) document.getElementById('activeValidityDate').value = data.validityDate || '';
-                if (document.getElementById('proposalTransportCost')) document.getElementById('proposalTransportCost').value = data.transportCost || 1200;
-                if (document.getElementById('proposalNotes')) document.getElementById('proposalNotes').value = data.notes || '';
-                if (document.getElementById('globalDiscount')) document.getElementById('globalDiscount').value = data.globalDiscount || 0;
-                if (document.getElementById('globalDiscountType')) document.getElementById('globalDiscountType').value = data.globalDiscountType || 'fixed';
-                if (document.getElementById('globalVat')) document.getElementById('globalVat').value = data.globalVat || 0.15;
-                if (document.getElementById('downPaymentPct')) document.getElementById('downPaymentPct').value = data.downPaymentPct || 50;
-                if (document.getElementById('downPaymentType')) document.getElementById('downPaymentType').value = data.downPaymentType || 'percent';
-                
-                if (document.getElementById('exp-accommodation')) document.getElementById('exp-accommodation').value = data.accommodation || 0;
-                if (document.getElementById('exp-scaffolding')) document.getElementById('exp-scaffolding').value = data.scaffolding || 0;
-                if (document.getElementById('exp-equipment')) document.getElementById('exp-equipment').value = data.equipment || 0;
-                if (document.getElementById('exp-consumables')) document.getElementById('exp-consumables').value = data.consumables || 0;
-                if (document.getElementById('exp-unexpected')) document.getElementById('exp-unexpected').value = data.unexpected || 0;
-                if (document.getElementById('exp-admin-pct')) document.getElementById('exp-admin-pct').value = data.adminPct || 5;
-
-                window.aiGeneratedProposalPitch = data.aiGeneratedProposalPitch || '';
-                const outputBox = document.getElementById('ai-pitch-output-box');
-                const clearBtn = document.getElementById('ai-pitch-clear-btn');
-                if (outputBox) {
-                    if (window.aiGeneratedProposalPitch) {
-                        outputBox.innerText = window.aiGeneratedProposalPitch;
-                        outputBox.classList.remove('hidden');
-                        if (clearBtn) clearBtn.classList.remove('hidden');
-                    } else {
-                        outputBox.innerText = '';
-                        outputBox.classList.add('hidden');
-                        if (clearBtn) clearBtn.classList.add('hidden');
-                    }
-                }
-
-                if (document.getElementById('activeClientSelector')) {
-                    document.getElementById('activeClientSelector').value = data.activeClientId || '';
-                    window.onActiveClientChanged(data.activeClientId || '');
-                }
-
-                window.recalcQuotationFinancials();
-            }
-        };
-
-        // Async Cloud Sync downloader
-        async function fetchAllCloudData() {
-            window.updateCloudStatus('connecting', 'تحديث البيانات من السحابة...');
-            try {
-                // Query collection Rule 2 (no complex filtering/compound queries)
-                const collRef = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('erp_store');
-                const snapshot = await collRef.get();
-                
-                if (!snapshot.empty) {
-                    snapshot.forEach(doc => {
-                        const key = doc.id;
-                        const val = doc.data()?.content;
-                        if (val) {
-                            window.applyCloudData(key, val);
-                        }
-                    });
-                    window.updateCloudStatus('synced', 'متصل بالسحابة ✔️');
-                } else {
-                    // Populate initial cloud data from default local values
-                    window.updateCloudStatus('saving', 'تهيئة السحابة لأول مرة...');
-                    await window.cloudSave('company_info', window.COMPANY_INFO, true);
-                    await window.cloudSave('product_library', window.PRODUCT_LIBRARY, true);
-                    await window.cloudSave('settings', window.SETTINGS, true);
-                    await window.cloudSave('clients', window.CLIENTS, true);
-                    await window.cloudSave('quotes', window.QUOTES, true);
-                    window.updateCloudStatus('synced', 'متصل بالسحابة ✔️');
-                }
-            } catch (e) {
-                console.error("Error reading cloud data:", e);
-                window.updateCloudStatus('error', 'وضع أوفلاين (حفظ محلي)');
-            }
-        }
-
-        // Debounced session synchronizer for active changes
-        let sessionSyncTimer = null;
-        window.triggerActiveSessionSync = function() {
-            if (sessionSyncTimer) clearTimeout(sessionSyncTimer);
-            sessionSyncTimer = setTimeout(async () => {
-                const sessionData = {
-                    activeCart: window.activeCart,
-                    projectName: document.getElementById('activeProjectName')?.value || '',
-                    proposalNum: document.getElementById('activeProposalNum')?.value || '',
-                    customerCode: document.getElementById('activeCustomerCode')?.value || '',
-                    validityDate: document.getElementById('activeValidityDate')?.value || '',
-                    transportCost: parseFloat(document.getElementById('proposalTransportCost')?.value) || 0,
-                    notes: document.getElementById('proposalNotes')?.value || '',
-                    globalDiscount: parseFloat(document.getElementById('globalDiscount')?.value) || 0,
-                    globalDiscountType: document.getElementById('globalDiscountType')?.value || 'fixed',
-                    globalVat: parseFloat(document.getElementById('globalVat')?.value) || 0,
-                    downPaymentPct: parseFloat(document.getElementById('downPaymentPct')?.value) || 0,
-                    downPaymentType: document.getElementById('downPaymentType')?.value || 'percent',
-                    accommodation: parseFloat(document.getElementById('exp-accommodation')?.value) || 0,
-                    scaffolding: parseFloat(document.getElementById('exp-scaffolding')?.value) || 0,
-                    equipment: parseFloat(document.getElementById('exp-equipment')?.value) || 0,
-                    consumables: parseFloat(document.getElementById('exp-consumables')?.value) || 0,
-                    unexpected: parseFloat(document.getElementById('exp-unexpected')?.value) || 0,
-                    adminPct: parseFloat(document.getElementById('exp-admin-pct')?.value) || 0,
-                    aiGeneratedProposalPitch: window.aiGeneratedProposalPitch || '',
-                    activeClientId: document.getElementById('activeClientSelector')?.value || ''
-                };
-                await window.cloudSave('active_session', sessionData, true);
-            }, 1200);
-        };
 
         // Global Format Helpers
         window.formatCurrency = (v) => Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -1511,10 +1310,12 @@
             if (window.activeCategory === 'indoor') {
                 document.getElementById('homeInstallRate').value = window.SETTINGS.indoorInstall;
                 const calcStructure = area * window.SETTINGS.indoorStructure;
+                // Applying indoor limit minimum beautifully
                 document.getElementById('homeStructureCost').value = Math.max(window.SETTINGS.minIndoorStructure, Math.round(calcStructure));
             } else {
                 document.getElementById('homeInstallRate').value = window.SETTINGS.outdoorInstall;
                 const calcStructure = area * window.SETTINGS.outdoorStructure;
+                // Applying outdoor limit minimum beautifully
                 document.getElementById('homeStructureCost').value = Math.max(window.SETTINGS.minOutdoorStructure, Math.round(calcStructure));
             }
         };
@@ -1571,19 +1372,18 @@
 
             window.activeCart.push(item);
             window.recalcQuotationFinancials();
-            window.triggerActiveSessionSync();
             window.showToast("تمت إضافة البند لعرض السعر بنجاح", "success");
         };
 
         window.removeCartItem = function(uid) {
             window.activeCart = window.activeCart.filter(x => x.uid !== uid);
             window.recalcQuotationFinancials();
-            window.triggerActiveSessionSync();
             window.showToast("تم حذف البند من القائمة", "info");
         };
 
         // Main Financial Calculation Dashboard sync
         window.recalcQuotationFinancials = function() {
+            // Render cart list inside Tab 1
             const cartList = document.getElementById('active-cart-items');
             cartList.innerHTML = window.activeCart.map(s => {
                 const priceHtml = s.discountAmt > 0
@@ -1666,6 +1466,7 @@
             const unexpected = parseFloat(document.getElementById('exp-unexpected').value) || 0;
             const adminPct = parseFloat(document.getElementById('exp-admin-pct').value) || 0;
 
+            // Base partial costs before administrative fees
             const partialCost = hardwareCost + steelCost + laborCost + accommodation + scaffolding + equipment + consumables + unexpected + otherExpenses;
             const adminCostVal = partialCost * (adminPct / 100);
 
@@ -1701,6 +1502,7 @@
             }
             const remainingBalance = Math.max(0, finalClientTotal - downPaymentAmt);
 
+            // Profit margin and percent
             const netProfit = totalBeforeTax - totalProjectCost;
             const profitPct = totalProjectCost > 0 ? ((netProfit / totalProjectCost) * 100).toFixed(1) : (netProfit > 0 ? 100 : 0);
 
@@ -1742,9 +1544,6 @@
                 <div class="flex justify-between text-slate-300 text-[11px] pt-1.5"><span>الدفعة المقدمة المطلوب سدادها:</span><span class="font-mono font-bold text-white">${window.formatCurrency(downPaymentAmt)} SAR</span></div>
                 <div class="flex justify-between text-slate-400 text-[11px]"><span>المتبقي عند التسليم والتشغيل:</span><span class="font-mono font-bold text-slate-200">${window.formatCurrency(remainingBalance)} SAR</span></div>
             `;
-
-            // Trigger active session background sync silently
-            window.triggerActiveSessionSync();
 
             // Prepare printable document
             window.syncPrintTemplate(hardwareSale, steelSale, transportClientCost, otherExpenses, accommodation, scaffolding, equipment, consumables, unexpected, adminCostVal, totalProjectCost, subtotalSale, discAmt, totalBeforeTax, vatPct, vatAmt, finalClientTotal, downPaymentAmt, remainingBalance, totPwr);
@@ -1990,7 +1789,6 @@
                 document.getElementById('activeClientCR').value = '';
             }
             window.syncQuotationMeta();
-            window.triggerActiveSessionSync();
         };
 
         window.syncQuotationMeta = function() {
@@ -2005,7 +1803,6 @@
             document.getElementById('pProjectName').innerText = document.getElementById('activeProjectName').value || '--';
             document.getElementById('pProposalNum').innerText = document.getElementById('activeProposalNum').value || 'PR-2026-001';
             document.getElementById('pValidityDate').innerText = document.getElementById('activeValidityDate').value || '15 يوماً';
-            window.triggerActiveSessionSync();
         };
 
         // Saving active proposal database
@@ -2027,7 +1824,6 @@
 
             window.QUOTES.push(q);
             localStorage.setItem('bf_led_quotes_v3', JSON.stringify(window.QUOTES));
-            window.cloudSave('quotes', window.QUOTES);
             window.showToast("تم حفظ عرض السعر بالأرشيف بنجاح", "success");
         };
 
@@ -2059,6 +1855,7 @@
                 rows.innerHTML = `<tr><td colspan="4" class="text-center text-slate-400 py-4 font-bold">لا يوجد عملاء مسجلين ومطابقين للبحث</td></tr>`;
             }
 
+            // Sync selectors too
             window.populateClientsDropdowns();
         };
 
@@ -2101,7 +1898,6 @@
             }
 
             localStorage.setItem('bf_led_clients_v3', JSON.stringify(window.CLIENTS));
-            window.cloudSave('clients', window.CLIENTS);
             window.showToast("تم حفظ بيانات العميل في السجل المعتمد", "success");
             window.resetClientForm();
             window.renderClientsTab();
@@ -2121,7 +1917,6 @@
             window.askConfirmation("حذف عميل", "هل أنت متأكد من حذف هذا العميل نهائياً من سجلات النظام؟", () => {
                 window.CLIENTS = window.CLIENTS.filter(x => x.id !== id);
                 localStorage.setItem('bf_led_clients_v3', JSON.stringify(window.CLIENTS));
-                window.cloudSave('clients', window.CLIENTS);
                 window.renderClientsTab();
                 window.showToast("تم حذف العميل بنجاح", "success");
             });
@@ -2162,7 +1957,6 @@
             window.askConfirmation("حذف عرض سعر", "هل أنت متأكد من حذف هذه المسودة نهائياً من أرشيف النظام؟", () => {
                 window.QUOTES = window.QUOTES.filter(x => x.id !== id);
                 localStorage.setItem('bf_led_quotes_v3', JSON.stringify(window.QUOTES));
-                window.cloudSave('quotes', window.QUOTES);
                 window.renderQuotationsTab();
                 window.showToast("تم حذف عرض السعر بنجاح", "success");
             });
@@ -2256,7 +2050,6 @@
             window.askConfirmation("حذف منتج الكتالوج", "هل أنت متأكد من حذف هذا الجهاز من قاعدة الكتالوج بالكامل؟", () => {
                 window.PRODUCT_LIBRARY[cat] = window.PRODUCT_LIBRARY[cat].filter(x => x.id !== id);
                 localStorage.setItem('bf_led_library_v3', JSON.stringify(window.PRODUCT_LIBRARY));
-                window.cloudSave('product_library', window.PRODUCT_LIBRARY);
                 window.renderProductManagerList();
                 window.switchHomeCategory(window.activeCategory);
                 window.showToast("تم حذف المنتج بنجاح", "success");
@@ -2298,7 +2091,6 @@
             }
 
             localStorage.setItem('bf_led_library_v3', JSON.stringify(window.PRODUCT_LIBRARY));
-            window.cloudSave('product_library', window.PRODUCT_LIBRARY);
             window.showToast("تم حفظ البند بالكتالوج بنجاح", "success");
 
             window.renderProductManagerList();
@@ -2371,7 +2163,6 @@
                         window.askConfirmation("استيراد كتالوج Excel", "هل ترغب في استبدال الكتالوج الحالي بالكامل بالكتالوج الجديد؟", () => {
                             window.PRODUCT_LIBRARY = { ...window.PRODUCT_LIBRARY, ...importedLibrary };
                             localStorage.setItem('bf_led_library_v3', JSON.stringify(window.PRODUCT_LIBRARY));
-                            window.cloudSave('product_library', window.PRODUCT_LIBRARY);
                             window.renderProductManagerList();
                             window.switchHomeCategory(window.activeCategory);
                             window.showToast("تمت معالجة ملف الإكسيل وتحديث الكتالوج بنجاح!", "success");
@@ -2440,7 +2231,6 @@
                 }
 
                 localStorage.setItem('bf_led_library_v3', JSON.stringify(window.PRODUCT_LIBRARY));
-                window.cloudSave('product_library', window.PRODUCT_LIBRARY);
                 window.renderProductManagerList();
                 window.switchHomeCategory(window.activeCategory);
                 window.showToast("تم تطبيق هامش الربح الجماعي وإعادة حساب كافة الأسعار بنجاح!", "success");
@@ -2474,17 +2264,17 @@
             const file = event.target.files[0];
             if (!file) return;
 
+            // Enforce file size warning if logo is too large for LocalStorage limit (e.g. > 1.5MB)
             if (file.size > 1.5 * 1024 * 1024) {
-                return window.showToast("الشعار كبير جداً، يُفضل استخدام صورة أقل من 1.5 ميجابايت لضمان الحفظ المباشر بالمتصفح والسحابة.", "warning");
+                return window.showToast("الشعار كبير جداً، يُفضل استخدام صورة أقل من 1.5 ميجابايت لضمان الحفظ المباشر بالمتصفح.", "warning");
             }
 
             const reader = new FileReader();
             reader.onload = function(e) {
                 window.COMPANY_INFO.logo = e.target.result;
                 localStorage.setItem('bf_company_info_v3', JSON.stringify(window.COMPANY_INFO));
-                window.cloudSave('company_info', window.COMPANY_INFO);
                 window.updateLogoUI();
-                window.recalcQuotationFinancials();
+                window.recalcQuotationFinancials(); // Force sync print preview
                 window.showToast("تم رفع وتطبيق شعار الشركة بنجاح", "success");
             };
             reader.readAsDataURL(file);
@@ -2493,9 +2283,8 @@
         window.removeCompanyLogo = function() {
             window.COMPANY_INFO.logo = '';
             localStorage.setItem('bf_company_info_v3', JSON.stringify(window.COMPANY_INFO));
-            window.cloudSave('company_info', window.COMPANY_INFO);
             window.updateLogoUI();
-            window.recalcQuotationFinancials();
+            window.recalcQuotationFinancials(); // Force sync print preview
             window.showToast("تم إزالة الشعار بنجاح، وتفعيل الأيقونة الافتراضية.", "info");
         };
 
@@ -2506,8 +2295,7 @@
             window.COMPANY_INFO.address = document.getElementById('settingsCompanyAddress').value.trim() || '';
             window.COMPANY_INFO.phone = document.getElementById('settingsCompanyPhone').value.trim() || '+966 56 839 7048';
             localStorage.setItem('bf_company_info_v3', JSON.stringify(window.COMPANY_INFO));
-            window.cloudSave('company_info', window.COMPANY_INFO);
-            window.recalcQuotationFinancials();
+            window.recalcQuotationFinancials(); // Force sync print preview
         };
 
         window.updateLogoUI = function() {
@@ -2538,8 +2326,8 @@
             window.SETTINGS.defaultTransport = parseFloat(document.getElementById('optDefaultTransport').value) || 0;
 
             localStorage.setItem('bf_led_settings_v3', JSON.stringify(window.SETTINGS));
-            window.cloudSave('settings', window.SETTINGS);
             
+            // Sync current active configurator defaults instantly
             document.getElementById('proposalTransportCost').value = window.SETTINGS.defaultTransport;
             window.recalcQuotationFinancials();
         };
@@ -2552,26 +2340,114 @@
             return null;
         };
 
+        // Complete System backup - Export JSON file
+        window.exportSystemBackup = function() {
+            try {
+                const backupPayload = {
+                    version: "3.5",
+                    timestamp: new Date().toISOString(),
+                    PRODUCT_LIBRARY: window.PRODUCT_LIBRARY,
+                    SETTINGS: window.SETTINGS,
+                    CLIENTS: window.CLIENTS,
+                    QUOTES: window.QUOTES,
+                    COMPANY_INFO: window.COMPANY_INFO,
+                    GEMINI_KEY: window.GEMINI_KEY
+                };
+
+                const jsonString = JSON.stringify(backupPayload, null, 2);
+                const blob = new Blob([jsonString], { type: "application/json" });
+                
+                // Native trigger file download
+                const link = document.createElement("a");
+                const dateStr = new Date().toISOString().slice(0, 10);
+                link.download = `Butterfly_ERP_Backup_${dateStr}.json`;
+                link.href = URL.createObjectURL(blob);
+                link.dataset.downloadurl = ["application/json", link.download, link.href].join(":");
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                window.showToast("تم تصدير النسخة الاحتياطية بنجاح وحفظها كملف JSON بجهازك!", "success");
+            } catch (err) {
+                console.error("Backup export error: ", err);
+                window.showToast("فشل تصدير النسخة الاحتياطية للنظام.", "warning");
+            }
+        };
+
+        // Complete System backup - Import JSON file
+        window.importSystemBackup = function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsedData = JSON.parse(e.target.result);
+                    
+                    // Validate basic expected payload fields to guarantee state health
+                    if (!parsedData.PRODUCT_LIBRARY || !parsedData.SETTINGS || !parsedData.CLIENTS || !parsedData.QUOTES || !parsedData.COMPANY_INFO) {
+                        return window.showToast("ملف النسخ الاحتياطي غير صالح أو تالف! يرجى رفع ملف تم تصديره من هذا النظام.", "warning");
+                    }
+
+                    window.askConfirmation("استيراد واستعادة النسخة الاحتياطية", "انتبه! سيقوم هذا الإجراء باستبدال جميع سجلات النظام الحالية وقائمة المنتجات وتفاصيل الشركة بالبيانات المستوردة. هل ترغب في الاستمرار؟", () => {
+                        // Apply imported values to memory
+                        window.PRODUCT_LIBRARY = parsedData.PRODUCT_LIBRARY;
+                        window.SETTINGS = parsedData.SETTINGS;
+                        window.CLIENTS = parsedData.CLIENTS;
+                        window.QUOTES = parsedData.QUOTES;
+                        window.COMPANY_INFO = parsedData.COMPANY_INFO;
+                        window.GEMINI_KEY = parsedData.GEMINI_KEY || '';
+
+                        // Commit back to local storage
+                        localStorage.setItem('bf_led_library_v3', JSON.stringify(window.PRODUCT_LIBRARY));
+                        localStorage.setItem('bf_led_settings_v3', JSON.stringify(window.SETTINGS));
+                        localStorage.setItem('bf_led_clients_v3', JSON.stringify(window.CLIENTS));
+                        localStorage.setItem('bf_led_quotes_v3', JSON.stringify(window.QUOTES));
+                        localStorage.setItem('bf_company_info_v3', JSON.stringify(window.COMPANY_INFO));
+                        localStorage.setItem('bf_led_gemini_key', window.GEMINI_KEY);
+
+                        // Clear and refresh UI elements instantly
+                        window.populateClientsDropdowns();
+                        window.switchHomeCategory('indoor');
+                        window.recalcQuotationFinancials();
+                        
+                        // If we are currently on settings tab, re-render fields
+                        if (window.activeTab === 'settings') {
+                            window.renderSettingsTab();
+                        }
+
+                        // Clear input file element
+                        document.getElementById('systemBackupFileInput').value = '';
+
+                        window.showToast("تمت استعادة كامل بيانات النظام بنجاح من ملف النسخة الاحتياطية!", "success");
+                    });
+
+                } catch (err) {
+                    console.error("Backup import parse error: ", err);
+                    window.showToast("فشلت قراءة ملف الـ JSON، يرجى التأكد من سلامة الملف المرفوع.", "warning");
+                }
+            };
+            reader.readAsText(file);
+        };
+
         // Initialize application configurations on load
         document.addEventListener('DOMContentLoaded', () => {
             window.populateClientsDropdowns();
             window.switchHomeCategory('indoor');
             window.recalcQuotationFinancials();
             
+            // Load Gemini API Key setting if exists
             const geminiInput = document.getElementById('settingsGeminiKey');
             if (geminiInput) {
                 geminiInput.value = window.GEMINI_KEY;
             }
 
+            // Set proposal values
             const today = new Date();
             document.getElementById('pQuoteDate').innerText = today.toLocaleDateString('en-GB');
             document.getElementById('activeValidityDate').value = new Date(today.setDate(today.getDate() + 15)).toLocaleDateString('en-GB');
             window.syncQuotationMeta();
-
-            // Kickstart Connection to Firebase & Sync Workspace (Rule 3 Flow)
-            initFirebaseConnection().then(() => {
-                fetchAllCloudData();
-            });
         });
 
         // ==================== GEMINI AI API IMPLEMENTATION ====================
@@ -2582,9 +2458,10 @@
             localStorage.setItem('bf_led_gemini_key', keyVal);
         };
 
+        // Helper function with Exponential Backoff for robust API queries
         window.callGeminiAPI = async function(prompt, systemPrompt = '') {
-            const apiKey = window.GEMINI_KEY || ''; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const apiKey = window.GEMINI_KEY || ''; // If empty, platform runtime provides it
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
 
             const payload = {
                 contents: [{ parts: [{ text: prompt }] }]
@@ -2615,6 +2492,7 @@
                         }
                     }
                 } catch (e) {
+                    // Exponential backoff
                     if (attempt === maxRetries) throw e;
                 }
                 await new Promise(res => setTimeout(res, delay));
@@ -2629,6 +2507,7 @@
                 return window.showToast("يرجى إدخال بنود وعناصر العرض لتوليد خطاب العرض الفني للعميل.", "warning");
             }
 
+            // Build payload details
             const selector = document.getElementById('activeClientSelector');
             const client = window.CLIENTS.find(x => x.id === selector.value)?.name || 'العميل الموقر';
             const project = document.getElementById('activeProjectName').value || 'مشروع شاشة LED المتكامل';
@@ -2650,6 +2529,7 @@
 إجمالي قيمة الاستثمار المالي: "${finalPrice}".
 يبدأ الخطاب بالترحيب وصياغة افتتاحية رسمية تشيد بثقة العميل، ثم تشرح تفوق أجهزة شاشات باترفلاي الفني بطريقة راقية وجذابة للغاية في حدود فقرتين إلى 3 فقرات فقط وبدون أي هوامش تسعير داخلية.`;
 
+            // UI feedback
             const btn = document.getElementById('ai-pitch-btn');
             const spinner = document.getElementById('ai-pitch-btn-spinner');
             const icon = document.getElementById('ai-pitch-btn-icon');
@@ -2666,12 +2546,13 @@
                 const responseText = await window.callGeminiAPI(userPrompt, systemPrompt);
                 window.aiGeneratedProposalPitch = responseText;
 
+                // Sync UI output
                 outputBox.innerText = responseText;
                 outputBox.classList.remove('hidden');
                 clearBtn.classList.remove('hidden');
 
+                // Trigger recalculations to force updating print layout
                 window.recalcQuotationFinancials();
-                window.triggerActiveSessionSync();
                 window.showToast("تم توليد خطاب العرض الفني الذكي بنجاح وتجهيزه للطباعة!", "success");
             } catch (err) {
                 console.error("Gemini connection error: ", err);
@@ -2691,7 +2572,6 @@
             outputBox.classList.add('hidden');
             document.getElementById('ai-pitch-clear-btn').classList.add('hidden');
             window.recalcQuotationFinancials();
-            window.triggerActiveSessionSync();
             window.showToast("تم مسح خطاب العرض الفني من المستند المطبوع.", "info");
         };
 
@@ -2730,6 +2610,7 @@
             inputEl.value = '';
             window.addMessageToChat('user', query);
 
+            // Add typing indicator
             const loadingId = 'ai-typing-' + Date.now();
             window.addMessageToChat('ai', 'جاري التفكير وصياغة الرد الهندسي والمالي...', loadingId);
 
@@ -2737,6 +2618,7 @@
             
             try {
                 const response = await window.callGeminiAPI(query, systemPrompt);
+                // Remove typing indicator and append real message
                 const indicator = document.getElementById(loadingId);
                 if (indicator) indicator.remove();
                 window.addMessageToChat('ai', response);
